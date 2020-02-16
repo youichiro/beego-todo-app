@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>BeegoTodoApp</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="top">
+            <h1>Beego Todo App</h1>
+            <a href="https://github.com/youichiro/beego-todo-app">[GitHub]</a>
+        </div>
+        <hr>
+        <br>
+        <table>
+            <tbody>
+                <tr v-for="todo in todos" v-bind:key="todo.Id">
+                    <td v-if="todo.Done" class="check">
+                        <input class="checkbox" type="checkbox" checked v-on:click="check(todo.Id, false)">
+                    </td>
+                    <td v-else class="check">
+                        <input class="checkbox" type="checkbox" v-on:click="check(todo.Id, true)">
+                    </td>
+                    <td v-if="!todo.isChange" class="todo">
+                        <span class="todoName" v-bind:class="{done: todo.Done}">{{ todo.Name }}</span>
+                    </td>
+                    <td v-else class="todo">
+                        <form :id="'changeForm'+todo.Id" v-on:submit="changeName(todo.Id)">
+                            <input class="change-input" type="text" :ref="'newName'+todo.Id" :placeholder="todo.Name">
+                        </form>
+                    </td>
+                    <td v-if="!todo.isChange" class="change">
+                        <button class="change-btn" type="button" v-on:click.prevent="todo.isChange=true">変更</button>
+                    </td>
+                    <td v-else class="change">
+                        <button class="change-btn" type="submit" :form="'changeForm'+todo.Id">変更</button>
+                    </td>
+                    <td class="delete">
+                        <button class="del-btn" type="button" v-on:click="deleteTodo(todo.Id)">削除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <form id="addForm" v-on:submit="addTodo">
+            <input type="text" ref="newName">
+            <button type="submit" form="addForm">追加</button>
+        </form>
+    </div>
+</body>
+<script>
+    axios.defaults.baseURL = 'http://localhost:8080';
+    new Vue({
+        el: "#app",
+        data: {
+            todos: [],
+            dummy: true,
+        },
+        mounted() {
+            axios.get('/api/todo')
+            .then(res => {
+                this.todos = res.data.map(obj => {
+                    obj["isChange"] = false;
+                    return obj;
+                })
+            })
+        },
+        methods: {
+            reload: function () {
+                window.location.reload();
+            },
+            addTodo: function () {
+                let todoName = this.$refs.newName.value;
+                axios.post('/api/todo', {
+                    Name: todoName
+                })
+                .catch(error => console.log(error))
+            },
+            deleteTodo: function (id) {
+                axios.get('/api/todo/delete/'+String(id))
+                .catch(error => console.log(error));
+                this.reload();
+            },
+            check: function (id, done) {
+                axios.post('/api/todo/'+String(id), {
+                    Done: done ? "true" : "false"
+                })
+                .catch(error => console.log(error));
+                this.reload();
+            },
+            changeName: function (id) {
+                let ref = 'newName' + String(id);
+                let changeName = this.$refs[ref][0].value;
+                axios.post('/api/todo/'+String(id), {
+                    Name: changeName
+                })
+                .catch(error => console.log(error));
+                todo = this.todos.find((todo) => {
+                    return (todo.Id === id);
+                });
+                todo.isChange = false;
+                this.reload();
+            }
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,104 @@
+html {
+  max-width: 600px;
+  margin: auto;
+  font-family: "Arial", "Avenir", "Corbel", "Osaka", "Hiragino Kaku Gothic Pro", "sans-serif";
+}
+
+#app {
+  margin: 40px;
+}
+
+#top {
+  display: flex;
+  position: relative;
+  height: 60px;
+}
+#top a {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-decoration: none;
+  color: gray;
+}
+#top a:hover {
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px 10px;
+}
+table td.check {
+  width: 30px;
+}
+table td.change {
+  width: 60px;
+}
+table td.delete {
+  width: 60px;
+}
+
+.todoName {
+  font-size: large;
+  font-weight: bold;
+}
+
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.btn, #addForm button, .del-btn, .change-btn {
+  border: none;
+  border-radius: 8px;
+  line-height: 24px;
+  color: white;
+  font-size: medium;
+  padding: 2px 12px;
+  text-decoration: none;
+  outline: none;
+  width: 60px;
+}
+
+.change-btn {
+  background: skyblue;
+}
+.change-btn:hover {
+  background: deepskyblue;
+}
+
+.del-btn {
+  background: salmon;
+}
+.del-btn:hover {
+  background: tomato;
+}
+
+.form, #addForm input[type=text], .change-input {
+  padding: 10px;
+  font-size: medium;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+}
+
+.change-input {
+  width: 80%;
+}
+
+#addForm {
+  display: flex;
+  margin-top: 100px;
+}
+#addForm input[type=text] {
+  width: 80%;
+  margin: 0 40px;
+}
+#addForm button {
+  background: lightgreen;
+}
+#addForm button:hover {
+  background: mediumseagreen;
+}
+
+/*# sourceMappingURL=main.css.map */
