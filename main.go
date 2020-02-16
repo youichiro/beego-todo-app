@@ -17,7 +17,7 @@ func init() {
 	err = orm.RegisterDataBase(
 		"default",
 		"mysql",
-		"root:<password>@tcp(127.0.0.1:3306)/beego_todo?charset=utf8")
+		"root:you416570@tcp(127.0.0.1:3306)/beego_todo?charset=utf8")
 	if err != nil {
 		fmt.Println(err)
 	}
