@@ -1,5 +1,5 @@
 # Beego Todo App
-Todo app Using Beego (Golang), Vue.js, DataBase (PostgreSQL)
+Todo app Using Beego (Golang), Vue.js, DataBase (MySQL)
 
 
 ## Install
@@ -18,7 +18,7 @@ Place this repository in `$GOPATH/src` and set up your database in `main.go`.
 In order to create database, execute:
 
 ```
-psql -c "CREATE DATABASE beego_todo" postgres
+mysql -u root -p -e 'CREATE DATABASE beego_todo'
 ```
 
 ## Start app
